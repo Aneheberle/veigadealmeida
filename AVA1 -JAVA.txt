@@ -1,0 +1,74 @@
+JAVA (Controller)
+
+package com.example.mediadenotasead;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
+import android.content.pm.ActivityInfo;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.EditText;
+
+public class MainActivity extends AppCompatActivity() {
+    EditText input1,input2,input3;
+    TextView tResult;
+        @override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main);
+
+    }
+    public void calculateAverage (View view){
+      TextView textView = findViewById(R.id.tResult);
+      EditText input1 = findViewById(R.id.inputNota1);
+      EditText input2 = findViewById(R.id.inputNota2);
+      EditText input3 = findViewById(R.id.inputNota3);
+
+        if (isEmpty (input1) || isEmpty (input2)  || isEmpty (input3)){
+            AlertDialog.Builder builder1 = new AlertDialog.Builder (this);
+            builder1.setMessage("Preencher campos A1, A2 e A3.");
+            builder1.setCancelable (true);
+            builder1.setPositiveButton(
+                "Sucesso",
+                new DialogInterface.Onclickstener(){
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                } );
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        } else{
+            float A1= float.parseFloat(String.valueOf(input1.getText()));
+            float A2= float.parseFloat(String.valueOf(input2.getText()));
+            float A3= float.parseFloat(String.valueOf(input3.getText()));
+
+            float calcTemp = (A1+A2+A3) /3;
+            textView.setText(String.valueOf(calcTemp));
+            if (calcTemp < 6 ) {
+                textView.setTextColor(color.parseColor("#ff0000"));
+                } else if (calcTemp >=6){
+                    textView.setTextColor(Color.parseColor("#4682b4"));
+            }
+
+        }
+    }
+    public void resetInputs (View view){
+        TextView textView = findViewById(R.id.tResult);
+        Edittext input1 = findViewById(R.id.inputNota1);
+        Edittext input2 = findViewById(R.id.inputNota2);
+        Edittext input3 = findViewById(R.id.inputNota3);
+
+        input1.setText("");
+        input2.setText("");
+        input3.setText("");
+        textView.setText("0.0");
+        textView.setTextColor(Color.parseColor("#000080"));
+
+    }
+    private boolean isEmpty(EditText etText){
+        return etText.getText().toString().trim().length() ==0;
+    }
+}
